@@ -15,3 +15,6 @@ secretGenerator:
     literals:
       - username=alberius
       - password=midgardsormr
+  - name: authentication
+    literals:
+      - developertoken=token

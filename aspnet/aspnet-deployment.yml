@@ -33,3 +33,9 @@ spec:
                   name: database-credentials
                   key: password
                   optional: false
+            - name: DEVELOPER_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: authentication
+                  key: developertoken
+                  optional: false
