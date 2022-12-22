@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dragalia-api-redis-service
+spec:
+  type: ClusterIP
+  selector:
+    app: dragalia-api-redis
+  ports:
+    - name: "redis"
+      protocol: TCP
+      port: 6379
+      targetPort: 6379
+    - name: "redis-insight"
+      protocol: TCP
+      port: 8001
+      targetPort: 8001

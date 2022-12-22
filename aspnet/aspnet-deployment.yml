@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dragalia-api-aspnet
+spec:
+  selector:
+    matchLabels:
+      app: dragalia-api-aspnet
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dragalia-api-aspnet
+    spec:
+      containers:
+        - name: dragalia-api-aspnet
+          image: sapiensanatis/dragalia-api:develop
+          ports:
+            - containerPort: 5000
+              name: "http"
+            - containerPort: 5001
+              name: "https"
+          env:
+            - name: POSTGRES_USER
+              value: alberius
+            - name: POSTGRES_PASSWORD
+              value: midgardsormr

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dragalia-api-redis
+spec:
+  selector:
+    matchLabels:
+      app: dragalia-api-redis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dragalia-api-redis
+    spec:
+      containers:
+        - name: dragalia-api-redis
+          image: redis/redis-stack
+          ports:
+            - containerPort: 6379
+              name: "redis"
+            - containerPort: 8001
+              name: "redis-insight"
