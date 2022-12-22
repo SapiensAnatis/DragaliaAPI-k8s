@@ -23,9 +23,17 @@ spec:
               name: dragalia-api-postgres-data-storage
           env:
             - name: POSTGRES_USER
-              value: alberius
+              valueFrom:
+                secretKeyRef:
+                  name: database-credentials
+                  key: username
+                  optional: false
             - name: POSTGRES_PASSWORD
-              value: midgardsormr
+              valueFrom:
+                secretKeyRef:
+                  name: database-credentials
+                  key: password
+                  optional: false
       volumes:
         - name: dragalia-api-postgres-data-storage
           persistentVolumeClaim:
