@@ -45,7 +45,9 @@ spec:
               name: "https"
           volumeMounts:
             - mountPath: "/app/logs"
-              name: dragalia-api-aspnet-logs
+              name: dragalia-api-aspnet-log
+            - mountPath: "/root/.aspnet/https"
+              name: dragalia-api-aspnet-cert
           env:
             - name: ASPNETCORE_URLS
               value: https://+:443;http://+:80
@@ -68,6 +70,9 @@ spec:
                   key: developertoken
                   optional: false
       volumes:
-        - name: dragalia-api-aspnet-logs
+        - name: dragalia-api-aspnet-log
           persistentVolumeClaim:
-            claimName: dragalia-api-aspnet-logs-persisent-volume-claim
+            claimName: dragalia-api-aspnet-log-volume-claim
+        - name: drggalia-api-aspnet-cert
+          persistentVolumeClaim:
+            claimName: dragalia-api-aspnet-cert-persisent-volume-claim

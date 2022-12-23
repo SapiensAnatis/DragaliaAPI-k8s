@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: dragalia-api-aspnet-logs-persisent-volume-claim
+  name: dragalia-api-aspnet-log-persisent-volume-claim
 spec:
-  volumeName: dragalia-api-aspnet-logs-persisent-volume
+  volumeName: dragalia-api-aspnet-log-persisent-volume
   storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
+      storage: 4Gi
