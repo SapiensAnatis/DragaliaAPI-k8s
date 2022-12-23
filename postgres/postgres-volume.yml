@@ -10,8 +10,8 @@ spec:
     name: dragalia-api-postgres-data-persisent-volume-claim
   storageClassName: manual
   capacity:
-    storage: 5Gi
+    storage: 16Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: '/dragalia-api-db'
+    path: "/dragalia-api-db"
