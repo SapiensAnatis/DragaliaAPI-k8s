@@ -10,5 +10,7 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: dragalia-api-aspnet-service
-              servicePort: 5000
+              service:
+                name: dragalia-api-aspnet-service
+                port: 
+                  number: 5000
