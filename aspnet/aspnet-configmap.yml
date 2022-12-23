@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dragalia-api-aspnet-configmap
+data:
+  appsettings.json: |+
+    {
+        "Serilog": {
+            "MinimumLevel": {
+                "Default": "Information",
+                "Override": {
+                    "Microsoft.AspNetCore": "Warning",
+                    "Microsoft.EntityFrameworkCore": "Warning"
+                }
+            },
+            "WriteTo": [
+                {
+                    "Name": "Console",
+                    "Args": {
+                        "outputTemplate": "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3} {SourceContext}][{RequestId}][{DeviceAccountId}] {Message:l}{NewLine}{Exception}"
+                    }
+                },
+                {
+                    "Name": "File",
+                    "Args": {
+                        "outputTemplate": "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3} {SourceContext}][{RequestId}][{DeviceAccountId}] {Message:l}{NewLine}{Exception}",
+                        "path": "logs/dragaliaapi_.log",
+                        "rollingInterval": "Day",
+                        "rollOnFileSizeLimit": true,
+                        "fileSizeLimitBytes": 1000000000,
+                        "retainedFileCountLimit": 14
+                    }
+                }
+            ]
+        },
+        "AllowedHosts": "*",
+        "ConnectionStrings": {
+            "RedisHost": "dragalia-api-redis-service",
+            "PostgresHost": "dragalia-api-db-service"
+        },
+        "HashSalt": "dragalia",
+        "SessionExpiryTimeMinutes": 60,
+        "DungeonExpiryTimeMinutes": 60,
+        "LettuceEncrypt": {
+        "AcceptTermsOfService": true,
+        "DomainNames": [],
+        "EmailAddress": "jay0@me.com"
+        }
+    }
+  

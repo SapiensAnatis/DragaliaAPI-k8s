@@ -12,6 +12,7 @@ spec:
       labels:
         app: dragalia-api-db
     spec:
+      hostname: postgres
       containers:
         - name: dragalia-api-db
           image: postgres:latest
@@ -37,4 +38,4 @@ spec:
       volumes:
         - name: dragalia-api-postgres-data-storage
           persistentVolumeClaim:
-            claimName: dragalia-api-postgres-data-persisent-volume-claim
+            claimName: dragalia-api-postgres-data-persistent-volume-claim

@@ -18,10 +18,10 @@ spec:
           command: ["/bin/sh"]
           args: ["-c", "until pg_isready -h $(DRAGALIA_API_DB_SERVICE_SERVICE_HOST) -p 5432; do echo \"Waiting for database\"; sleep 2; done;"]
         - name: migrate-db
-          image: sapiensanatis/dragalia-api:develop
-          workingDir: "/app"
+          image: sapiensanatis/dragalia-api:latest
+          imagePullPolicy: Always
           command: ["/bin/sh"]
-          args: ["./migrate-bundle"]
+          args: ["-c", "/app/migrate-bundle -v"]
           env:
             - name: POSTGRES_USER
               valueFrom:
@@ -35,9 +35,16 @@ spec:
                   name: database-credentials
                   key: password
                   optional: false
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Staging
+          volumeMounts:
+            - mountPath: "/app/appsettings.Staging.json"
+              name: dragalia-api-config
+              subPath: "appsettings.json"
       containers:
         - name: dragalia-api-aspnet
-          image: sapiensanatis/dragalia-api:develop
+          image: sapiensanatis/dragalia-api:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
               name: "http"
@@ -46,11 +53,14 @@ spec:
           volumeMounts:
             - mountPath: "/app/logs"
               name: dragalia-api-aspnet-log
-            - mountPath: "/root/.aspnet/https"
-              name: dragalia-api-aspnet-cert
+            - mountPath: "/app/appsettings.Staging.json"
+              name: dragalia-api-config
+              subPath: "appsettings.json"
           env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Staging
             - name: ASPNETCORE_URLS
-              value: https://+:443;http://+:80
+              value: http://+:80
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
@@ -72,7 +82,7 @@ spec:
       volumes:
         - name: dragalia-api-aspnet-log
           persistentVolumeClaim:
-            claimName: dragalia-api-aspnet-log-volume-claim
-        - name: drggalia-api-aspnet-cert
-          persistentVolumeClaim:
-            claimName: dragalia-api-aspnet-cert-persisent-volume-claim
+            claimName: dragalia-api-aspnet-log-persistent-volume-claim
+        - name: dragalia-api-config
+          configMap:
+            name: dragalia-api-aspnet-configmap

@@ -12,6 +12,7 @@ spec:
       labels:
         app: dragalia-api-redis
     spec:
+      hostname: redis
       containers:
         - name: dragalia-api-redis
           image: redis/redis-stack

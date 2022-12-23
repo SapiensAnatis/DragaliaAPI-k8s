@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: dragalia-api-aspnet-cert-persisent-volume
+  name: dragalia-api-aspnet-cert-persistent-volume
   labels:
     type: local
 spec:
   claimRef:
     namespace: default
-    name: dragalia-api-aspnet-cert-persisent-volume-claim
+    name: dragalia-api-aspnet-cert-persistent-volume-claim
   storageClassName: manual
   capacity:
     storage: 1Mi
   accessModes:
-    - ReadOnlyMany
+    - ReadWriteOnce
   hostPath:
     path: "/usr/dragalia-api/certs"

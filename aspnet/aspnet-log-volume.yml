@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: dragalia-api-aspnet-log-persisent-volume
+  name: dragalia-api-aspnet-log-persistent-volume
   labels:
     type: local
 spec:
   claimRef:
     namespace: default
-    name: dragalia-api-aspnet-log-persisent-volume-claim
+    name: dragalia-api-aspnet-log-persistent-volume-claim
   storageClassName: manual
   capacity:
     storage: 4Gi
