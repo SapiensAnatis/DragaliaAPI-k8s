@@ -12,7 +12,6 @@ resources:
   - postgres/postgres-deployment.yml
   - redis/redis-service.yml
   - redis/redis-deployment.yml
-  - traefik/traefik-ingress.yml
 
 secretGenerator:
   - name: database-credentials

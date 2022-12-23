@@ -12,35 +12,6 @@ spec:
       labels:
         app: dragalia-api-aspnet
     spec:
-      initContainers:
-        - name: await-db-ready
-          image: postgres:latest
-          command: ["/bin/sh"]
-          args: ["-c", "until pg_isready -h $(DRAGALIA_API_DB_SERVICE_SERVICE_HOST) -p 5432; do echo \"Waiting for database\"; sleep 2; done;"]
-        - name: migrate-db
-          image: sapiensanatis/dragalia-api:latest
-          imagePullPolicy: Always
-          command: ["/bin/sh"]
-          args: ["-c", "/app/migrate-bundle -v"]
-          env:
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: database-credentials
-                  key: username
-                  optional: false
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: database-credentials
-                  key: password
-                  optional: false
-            - name: ASPNETCORE_ENVIRONMENT
-              value: Staging
-          volumeMounts:
-            - mountPath: "/app/appsettings.Staging.json"
-              name: dragalia-api-config
-              subPath: "appsettings.json"
       containers:
         - name: dragalia-api-aspnet
           image: sapiensanatis/dragalia-api:latest
