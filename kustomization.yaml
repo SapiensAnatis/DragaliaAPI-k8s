@@ -5,8 +5,6 @@ resources:
   - aspnet/aspnet-configmap.yml
   - aspnet/aspnet-log-volume.yml
   - aspnet/aspnet-log-volume-claim.yml
-  - aspnet/aspnet-cert-volume.yml
-  - aspnet/aspnet-cert-volume-claim.yml
   - aspnet/aspnet-deployment.yml
   - postgres/postgres-service.yml
   - postgres/postgres-volume.yml
