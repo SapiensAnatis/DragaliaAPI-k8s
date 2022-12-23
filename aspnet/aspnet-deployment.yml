@@ -12,15 +12,43 @@ spec:
       labels:
         app: dragalia-api-aspnet
     spec:
+      initContainers:
+        - name: await-db-ready
+          image: postgres:latest
+          command: ["/bin/sh"]
+          args: ["-c", "until pg_isready -h $(DRAGALIA_API_DB_SERVICE_SERVICE_HOST) -p 5432; do echo \"Waiting for database\"; sleep 2; done;"]
+        - name: migrate-db
+          image: sapiensanatis/dragalia-api:develop
+          workingDir: "/app"
+          command: ["/bin/sh"]
+          args: ["./migrate-bundle"]
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: database-credentials
+                  key: username
+                  optional: false
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-credentials
+                  key: password
+                  optional: false
       containers:
         - name: dragalia-api-aspnet
           image: sapiensanatis/dragalia-api:develop
           ports:
-            - containerPort: 5000
+            - containerPort: 80
               name: "http"
-            - containerPort: 5001
+            - containerPort: 443
               name: "https"
+          volumeMounts:
+            - mountPath: "/app/logs"
+              name: dragalia-api-aspnet-logs
           env:
+            - name: ASPNETCORE_URLS
+              value: https://+:443;http://+:80
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
@@ -39,3 +67,7 @@ spec:
                   name: authentication
                   key: developertoken
                   optional: false
+      volumes:
+        - name: dragalia-api-aspnet-logs
+          persistentVolumeClaim:
+            claimName: dragalia-api-aspnet-logs-persisent-volume-claim

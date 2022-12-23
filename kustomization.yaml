@@ -3,6 +3,8 @@ kind: Kustomization
 resources:
   - aspnet/aspnet-deployment.yml
   - aspnet/aspnet-service.yml
+  - aspnet/aspnet-volume.yml
+  - aspnet/aspnet-volume-claim.yml
   - postgres/postgres-deployment.yml
   - postgres/postgres-service.yml
   - postgres/postgres-volume.yml

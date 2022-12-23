@@ -10,10 +10,10 @@ spec:
     - name: "http"
       protocol: TCP
       port: 5000
-      targetPort: 5000
+      targetPort: 80
       nodePort: 30000
     - name: "https"
       protocol: TCP
       port: 5001
-      targetPort: 5001
+      targetPort: 443
       nodePort: 30001
